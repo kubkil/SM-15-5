@@ -1,0 +1,26 @@
+{
+  "name": "SM-15-5",
+  "version": "1.0.0",
+  "description": "https://kubkil.github.io/SM-15-5/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kubkil/SM-15-5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kubkil/SM-15-5/issues"
+  },
+  "homepage": "https://github.com/kubkil/SM-15-5#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  }
+}
