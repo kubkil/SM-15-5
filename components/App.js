@@ -1,4 +1,3 @@
-// wszystko ma być w tej klasie - od góry do dołu?
 App = React.createClass({
   getInitialState() {
     return {
@@ -43,7 +42,7 @@ App = React.createClass({
     }.bind(this))
     .catch(function (error) {
       console.log(error);
-    })
+    });
   },
 
   render: function () {
