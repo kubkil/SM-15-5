@@ -7,42 +7,50 @@ App = React.createClass({
     };
   },
 
-  getGit: function (searchingText) {
-    return new Promise(function (resolve, reject) {
-      const url = 'https://api.giphy.com' + '/v1/gifs/random?api_key=' + 'Ahz6kKvHoNTrwWXaZYfD2P3uhpLF60NE' + '&tag=' + searchingText;
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', url);
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          const data = JSON.parse(xhr.responseText).data
-          const gif = {
-            url: data.fixed_width_downsampled_url,
-            sourceUrl: data.url
+  getGif: function (searchingText) {
+    return new Promise(
+      function (resolve, reject) {
+        const API = 'https://api.giphy.com';
+        const KEY = 'Ahz6kKvHoNTrwWXaZYfD2P3uhpLF60NE';
+        const url = API + '/v1/gifs/random?api_key=' + KEY + '&tag=' + searchingText;
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText).data
+            const gif = {
+              url: data.fixed_width_downsampled_url,
+              sourceUrl: data.url
+            }
+            resolve(gif);
+          } else {
+            reject(Error(xhr.statusText));
           }
-          resolve(gif);
-        } else {
-          reject(Error(xhr.statusText));
+        };
+        xhr.onerror = function () {
+          reject(Error(`XMLHttpRequest Error: ${this.statusText}`));
         }
+        xhr.open('GET', url);
+        xhr.send();
       }
-    });
-    xhr.send();
+    );
   },
 
   handleSearch: function (searchingText) {
     this.setState({
       loading: true
     });
-    // dlaczego gif => zamiast function(gif) wywala błąd składni w linii 43 kropka przed bind?
-    this.getGif(searchingText).then(function (gif) {
-      this.setState({
-        loading: false,
-        gif: gif,
-        searchingText: searchingText
-      });
-    }.bind(this))
-    .catch(function (error) {
-      console.log(error);
-    });
+    this.getGif(searchingText)
+      .then(function (gif) {
+        this.setState({
+          loading: false,
+          gif: gif,
+          searchingText: searchingText
+        });
+      // bind(this) bo brak arrow function?
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+      }.bind(this));
   },
 
   render: function () {
